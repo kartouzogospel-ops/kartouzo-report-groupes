@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KARTOUZO // M.V.A</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --red: #ff2929;
+  --red-dark: #850000;
+  --bg: #050505;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  color: #eee;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Fond animé avec un effet de lueur rouge */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(255, 41, 41, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 50% 100%, rgba(133, 0, 0, 0.15) 0%, transparent 60%);
+  animation: pulseBg 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulseBg {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.container {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 41, 41, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ligne de néon lumineuse en haut du panneau */
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  opacity: 0.8;
+}
+
+/* Animation d'apparition du panneau */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.container { animation: fadeInUp 0.6s ease-out both; }
+
+.logo {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px var(--red), 0 0 20px var(--red-dark);
+  animation: neonFlicker 3s infinite;
+}
+
+@keyframes neonFlicker {
+  0%, 100% { text-shadow: 0 0 10px var(--red), 0 0 20px var(--red-dark); }
+  50% { text-shadow: 0 0 15px var(--red), 0 0 30px var(--red-dark); }
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--red);
+  font-size: 11px;
+  margin: 9px 0 30px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+label {
+  display: block;
+  margin: 18px 0 8px;
+  font-size: 12px;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 14px;
+  background: #080808;
+  border: 1px solid #383838;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 10px rgba(255, 41, 41, 0.2);
+  background: #0d0d0d;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.3s;
+  box-shadow: 0 0 15px rgba(255, 41, 41, 0.2);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(255, 41, 41, 0.5);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.result {
+  display: none;
+  margin-top: 20px;
+  padding: 15px;
+  background: #080808;
+  border: 1px solid var(--red-dark);
+  border-left: 4px solid var(--red);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #ddd;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+small {
+  display: block;
+  text-align: center;
+  color: #666;
+  font-size: 10px;
+  margin-top: 22px;
+  letter-spacing: 1px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="logo">KARTOUZO // M.V.A</div>
+  <div class="subtitle">WHATSAPP GROUP REPORT</div>
+
+  <label>LIEN DU GROUPE WHATSAPP</label>
+  <input id="link" type="url" placeholder="https://chat.whatsapp.com/...">
+
+  <label>CATÉGORIE DU SIGNALEMENT</label>
+  <select id="category">
+    <option value="">Choisir une catégorie</option>
+    <option value="Arnaque ou escroquerie">Arnaque ou escroquerie</option>
+    <option value="Fraude">Fraude</option>
+    <option value="Spam">Spam</option>
+    <option value="Menaces ou harcèlement">Menaces ou harcèlement</option>
+    <option value="Activités illégales présumées">Activités illégales présumées</option>
+    <option value="Autre comportement abusif">Autre comportement abusif</option>
+  </select>
+
+  <button onclick="generateReport()">
+    ⚡ GÉNÉRER LE SIGNALEMENT
+  </button>
+
+  <div class="result" id="result"></div>
+
+  <small>
+    KARTOUZO // M.V.A<br>
+    REPORT SYSTEM — SIGNALER DES FAITS RÉELS
+  </small>
+</div>
+
+<script>
+// La fonctionnalité est restée EXACTEMENT la même
+function generateReport(){
+  const link = document.getElementById("link").value.trim();
+  const category = document.getElementById("category").value;
+  const result = document.getElementById("result");
+
+  if(!/^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9_-]+\/?$/.test(link)){
+    alert("Entre un lien d'invitation WhatsApp valide.");
+    return;
+  }
+
+  if(!category){
+    alert("Choisis une catégorie.");
+    return;
+  }
+
+  const subject = "Signalement d'un groupe WhatsApp - " + category;
+
+  const body = `Bonjour équipe WhatsApp,
+
+Je souhaite vous transmettre un signalement concernant un groupe WhatsApp.
+
+CATÉGORIE :
+${category}
+
+LIEN DU GROUPE :
+${link}
+
+Je vous demande de bien vouloir examiner ce groupe et vérifier si les activités qui y sont menées contreviennent aux Conditions d'utilisation et aux règles de WhatsApp.
+
+Je vous remercie de procéder aux vérifications nécessaires et de prendre les mesures appropriées si une violation est constatée.
+
+Je reste disponible pour fournir des informations complémentaires si nécessaire.
+
+Cordialement.`;
+
+  result.style.display = "block";
+  result.innerHTML = "<b>✅ Signalement préparé.</b><br>Ton application e-mail va s'ouvrir avec le message prérempli.";
+
+  const mailto = "mailto:abuse@whatsapp.com?subject="
+    + encodeURIComponent(subject)
+    + "&body=" + encodeURIComponent(body);
+
+  window.location.href = mailto;
+}
+</script>
+</body>
+</html>
